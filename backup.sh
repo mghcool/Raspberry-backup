@@ -12,7 +12,6 @@ FILE=$BACK_UP_DIR/raspi-backup.img  #备份后的img文件名
 
 sudo mkdir $BACK_UP_DIR
 
-echo
 
 #安装需要的软件安装包 
 
