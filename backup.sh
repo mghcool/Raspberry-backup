@@ -126,7 +126,7 @@ cd $dst_root_path
 sudo chmod 777  $dst_root_path/
 
 #通过rsync 来同步根目录到IMG镜像中，排除了一些不需要同步的文件
-sudo rsync -ax  -q --exclude="$FILE" --exclude=$BACK_UP_DIR/*  --exclude=/sys/* --exclude=/proc/*  --exclude=/tmp/* /  $dst_root_path/
+sudo rsync -ax  -q --exclude="$FILE" --exclude=$BACK_UP_DIR  --exclude=$BACKUP_DIR/$0  --exclude=/sys/* --exclude=/proc/*  --exclude=/tmp/* /  $dst_root_path/
 
 #返回目录 $BACKUP_DIR
 cd $BACKUP_DIR
