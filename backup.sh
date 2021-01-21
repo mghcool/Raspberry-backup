@@ -31,7 +31,7 @@ MMCBLK0P1=`df -P | grep /dev/mmcblk0p1 | awk '{print $2}'`  #获取主目录的�
 
 ALL=`echo $ROOT $MMCBLK0P1 |awk '{print int(($1+$2)*1.2)}'`  #生成一个比ROOT目录和主目录大一点的IMG文件
 
-dd if=/dev/zero of=$FILE bs=1K count=$ALL
+dd if=/dev/zero of=$FILE bs=1K count=$ALL status=progress
 
 echo "Root 大小是 $ROOT"
 
