@@ -107,6 +107,7 @@ umount $dst_boot_path
 umount $dst_root_path
 kpartx -d ${device_dst}p1
 kpartx -d ${device_dst}p2
+kpartx -d $loopdevice_dst 
 losetup -d $loopdevice_dst   
 rm -rf  $dst_boot_path
 rm -rf  $dst_root_path
