@@ -26,7 +26,7 @@ apt clean
 echo -e "$Color_Green创建img文件...$Color_End"
 ROOT=`df -P | grep /dev/root | awk '{print $3}'`   #获取 ROOT的文件大小
 MMCBLK0P1=`df -P | grep /dev/mmcblk0p1 | awk '{print $2}'`  #获取主目录的文件大小
-ALL=`echo $ROOT $MMCBLK0P1 | awk '{print int(($1+$2)+1024*200)}'`  #生成一个比原文件大200M的IMG文件
+ALL=`echo $ROOT $MMCBLK0P1 | awk '{print int(($1+$2)*1.1)}'`  #生成一个比原文件大200M的IMG文件
 echo "预计生成文件大小：$(($ALL/1024))MB"
 echo "root 大小是 $(($ROOT/1024))MB"
 echo "boot 大小是 $(($MMCBLK0P1/1024))MB"
