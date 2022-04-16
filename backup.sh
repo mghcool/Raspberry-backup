@@ -19,7 +19,8 @@ mkdir $BACK_UP_DIR
 
 #安装必要的软件安装包 
 echo -e "$Color_Green安装必要的软件...$Color_End"
-DEBIAN_FRONTEND=noninteractive apt install -y dosfstools dump parted kpartx rsync > /dev/null 2> /dev/null
+apt install -y dosfstools dump parted kpartx rsync 2>/dev/null \
+    | grep -E "dosfstools|dump|parted|kpartx|rsync"
 apt clean
 
 #创建镜像img文件
