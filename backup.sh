@@ -19,9 +19,8 @@ mkdir $BACK_UP_DIR
 
 #安装必要的软件安装包 
 echo -e "$Color_Green安装必要的软件...$Color_End"
-apt install -y dosfstools dump parted kpartx rsync 2>/dev/null \
-    | grep -E "dosfstools|dump|parted|kpartx|rsync"
-apt clean
+apt-get install -qq -y dosfstools dump parted kpartx rsync
+apt-get clean
 
 #创建镜像img文件
 echo -e "$Color_Green创建img文件...$Color_End"
