@@ -90,16 +90,16 @@ echo -e "$Color_Green设置自动扩展空间 ...$Color_End"
 sed -i 's/exit 0/sudo bash \/expand-rootfs.sh \&/' $dst_root_path/etc/rc.local 
 echo "exit 0" >> $dst_root_path/etc/rc.local 
 cat > $dst_root_path/expand-rootfs.sh << EOF
-#/bin/bash
+#!/bin/bash
 
 sed -i '/sudo bash \/expand-rootfs.sh &/d' /etc/rc.local 
 rm "\`pwd\`/\$0"
 echo -e "\033[33m两秒后扩展分区空间！\033[0m"
 sleep 2
-sudo raspi-config --expand-rootfs
+raspi-config --expand-rootfs
 echo -e "\033[33my一秒后重启系统！\033[0m"
 sleep 1
-sudo reboot
+reboot
 EOF
 
 
