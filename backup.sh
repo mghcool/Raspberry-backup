@@ -6,7 +6,7 @@ Color_End="\033[0m"
 Color_Red="\033[31m"
 Color_Green="\033[32m"
 
-if [ `id -u` != 0 ];then
+if [ `id -un` != "root" ];then
     echo -e "$Color_Red权限不足，退出脚本！ $Color_End"
     exit 1
 fi
