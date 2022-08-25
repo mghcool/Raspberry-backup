@@ -11,16 +11,16 @@ if [ `id -un` != "root" ];then
     exit 1
 fi
 
+#安装必要的软件安装包 
+echo -e "$Color_Green安装必要的软件...$Color_End"
+apt-get install -qq -y dosfstools dump parted kpartx rsync
+apt-get clean
+
 # 设置文件存放目录
 BACKUP_DIR=`pwd`
 BACK_UP_DIR=$BACKUP_DIR/raspi-backup
 FILE=$BACK_UP_DIR/raspi-backup.img  #备份后的img文件名
 mkdir $BACK_UP_DIR
-
-#安装必要的软件安装包 
-echo -e "$Color_Green安装必要的软件...$Color_End"
-apt-get install -qq -y dosfstools dump parted kpartx rsync
-apt-get clean
 
 #创建镜像img文件
 echo -e "$Color_Green创建img文件...$Color_End"
