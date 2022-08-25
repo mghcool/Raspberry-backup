@@ -26,7 +26,7 @@ mkdir $BACK_UP_DIR
 echo -e "$Color_Green创建img文件...$Color_End"
 ROOT=`df -P | grep /dev/root | awk '{print $3}'`   #获取 ROOT的文件大小
 MMCBLK0P1=`df -P | grep /dev/mmcblk0p1 | awk '{print $2}'`  #获取主目录的文件大小
-ALL=`echo $ROOT $MMCBLK0P1 | awk '{print int(($1+$2)*1.1)}'`  #生成一个比原文件大200M的IMG文件
+ALL=`echo $ROOT $MMCBLK0P1 | awk '{print int(($1+$2)*1.2)}'`  #生成一个比原文件大1.2倍的IMG文件
 echo "预计生成文件大小：$(($ALL/1024))MB"
 echo "root 大小是 $(($ROOT/1024))MB"
 echo "boot 大小是 $(($MMCBLK0P1/1024))MB"
@@ -38,7 +38,8 @@ echo -e "$Color_Green格式化root和boot...$Color_End"
 P1_START=`fdisk -l /dev/mmcblk0 | grep /dev/mmcblk0p1 | awk '{print $2}'`
 P1_END=`fdisk -l /dev/mmcblk0 | grep /dev/mmcblk0p1 | awk '{print $3}'`
 P2_START=`fdisk -l /dev/mmcblk0 | grep /dev/mmcblk0p2 | awk '{print $2}'`
-echo "boot_start is :$P1_START .boot_end is : $P1_END  .rootfs_start is :$P2_START"
+echo "boot扇区: $P1_START - $P1_END "
+echo "root扇区: :$P2_START - end"
 parted $FILE --script -- mklabel msdos
 parted $FILE --script -- mkpart primary fat32 ${P1_START}s ${P1_END}s
 parted $FILE --script -- mkpart primary ext4 ${P2_START}s -1
@@ -76,7 +77,9 @@ mount -t ext4 ${device_dst}p2 $dst_root_path
 cd $dst_root_path
 chmod 777 $dst_root_path/
 #通过rsync复制根目录文件到IMG镜像中，排除了一些不需要同步的文件
-rsync -ax --info=progress2 --no-inc-recursive \
+rsync -ax \
+    --info=progress2 \
+    --no-inc-recursive \
     --exclude="$FILE" \
     --exclude=$BACK_UP_DIR  \
     --exclude=$BACKUP_DIR/$0  \
@@ -121,6 +124,10 @@ sed -i "s/$opartuuidr/$npartuuidr/g" $dst_root_path/etc/fstab
 
 #清理释放装载的文件夹
 echo -e "$Color_Green清理释放装载的文件夹...$Color_End"
+echo "dst_boot_path: $dst_boot_path"
+echo "dst_root_path : $dst_root_path"
+echo "device_dst: ${device_dst}"
+echo "loopdevice_dst: $loopdevice_dst "
 umount $dst_boot_path
 umount $dst_root_path
 kpartx -d ${device_dst}p1
